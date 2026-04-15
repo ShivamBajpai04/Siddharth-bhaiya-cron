@@ -1,4 +1,7 @@
-import { get, post } from "axios";
+import dotenv from "dotenv";
+import axios from "axios";
+
+dotenv.config();
 
 const TARGET_SKU = process.env.TARGET_SKU;
 const BASE_URL =
@@ -12,7 +15,7 @@ async function fetchAllProducts() {
         const url = `${BASE_URL}?limit=250&page=${page}`;
         console.log(`Fetching page ${page}`);
 
-        const res = await get(url, {
+        const res = await axios.get(url, {
             headers: {
                 "User-Agent": "Mozilla/5.0",
             },
@@ -36,7 +39,7 @@ async function sendTelegram(message) {
 
     if (!token || !chatId) return;
 
-    await post(`https://api.telegram.org/bot${token}/sendMessage`, {
+    await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
         chat_id: chatId,
         text: message,
     });
@@ -64,7 +67,9 @@ URL: https://www.westside.com/products/${product.handle}
             }
         }
 
-        console.log("SKU not found ❌");
+        const notFoundMessage = `SKU not found ❌\nTarget SKU: ${TARGET_SKU}`;
+        console.log(notFoundMessage);
+        await sendTelegram(notFoundMessage);
     } catch (err) {
         console.error("Error:", err.message);
     }
