@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import axios from "axios";
 
-dotenv.config();
+// dotenv.config();
 
 const TARGET_SKU = process.env.TARGET_SKU;
 const BASE_URL =
