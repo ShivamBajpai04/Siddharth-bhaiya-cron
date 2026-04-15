@@ -3,7 +3,7 @@ import axios from "axios";
 
 // dotenv.config();
 
-const TARGET_SKU = process.env.TARGET_SKU;
+const TARGET_SKU = "301041990002";
 const BASE_URL =
     "https://www.westside.com/collections/view-all-menswear/products.json";
 const REQUIRED_ENV_VARS = [
