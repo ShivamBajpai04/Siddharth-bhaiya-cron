@@ -3,9 +3,23 @@ import axios from "axios";
 
 // dotenv.config();
 
-const TARGET_SKU = "301041990002";
+const TARGET_SKU = process.env.TARGET_SKU;
 const BASE_URL =
     "https://www.westside.com/collections/view-all-menswear/products.json";
+const REQUIRED_ENV_VARS = [
+    "TELEGRAM_BOT_TOKEN",
+    "TELEGRAM_CHAT_ID",
+];
+
+function validateEnvVars() {
+    const missingVars = REQUIRED_ENV_VARS.filter((name) => !process.env[name]);
+
+    if (missingVars.length > 0) {
+        throw new Error(
+            `Missing required environment variables: ${missingVars.join(", ")}`
+        );
+    }
+}
 
 async function fetchAllProducts() {
     let page = 1;
@@ -75,4 +89,5 @@ URL: https://www.westside.com/products/${product.handle}
     }
 }
 
+validateEnvVars();
 checkSku();
